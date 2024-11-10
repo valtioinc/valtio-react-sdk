@@ -5,7 +5,10 @@
   "license": "MIT",
   "author": "Valtio Inc",
   "homepage": "https://valtio.io",
-  "repository": "https://github.com/valtioinc/valtio-react-sdk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valtioinc/valtio-react-sdk.git"
+  },
   "keywords": [
     "valtio",
     "sdk",
