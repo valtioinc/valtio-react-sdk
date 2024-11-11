@@ -26,13 +26,12 @@
     "build": "yarn clean && yarn build:esbuild && yarn build:tsc",
     "build:tsc": "tsc --emitDeclarationOnly --outDir dist",
     "build:esbuild": "node esbuild.config.js",
-    "publish": "yarn publish --access public",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prepack": "yarn build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "sca": "yarn audit-ci --config .audit-ci.jsonc --report-type summary",
-    "sca:fix": "yarn yarn-audit-fix"
+    "sca": "audit-ci --config .audit-ci.jsonc --report-type summary",
+    "sca:fix": "yarn-audit-fix"
   },
   "publishConfig": {
     "access": "public"
@@ -42,8 +41,6 @@
     "@commitlint/config-conventional": "^19.5.0",
     "@commitlint/prompt-cli": "^19.5.0",
     "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.1",
