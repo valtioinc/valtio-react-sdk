@@ -27,7 +27,6 @@
     "build:tsc": "tsc --emitDeclarationOnly --outDir dist",
     "build:esbuild": "node esbuild.config.js",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "prepack": "yarn build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "sca": "audit-ci --config .audit-ci.jsonc --report-type summary",

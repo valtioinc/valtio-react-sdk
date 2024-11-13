@@ -1,4 +1,5 @@
 import React from "react";
+import "assets/styles.css";
 
 export interface ComponentProps {
   host?: string;
@@ -20,6 +21,7 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
 }) => {
   const url = `${host}/${endpoint}`;
   const ref = React.useRef<HTMLElement>();
+  const [ready, setReady] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const el = ref?.current;
@@ -73,18 +75,27 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
   }, [onLoad]);
 
   return (
-    <iframe
-      src={url}
-      // width={screen.width}
-      width="100%"
-      height="100%"
-      frameBorder={0}
-      style={{
-        width: "100vw",
-        height: "100vh",
-        overflow: "scroll",
-      }}
-      data-testid="valtio-iframe"
-    />
+    <div>
+      <div
+        className="valtio-loader"
+        style={{ display: ready ? "none" : "flex" }}
+      >
+        <div className="sk-wander">
+          <div className="sk-wander-cube"></div>
+          <div className="sk-wander-cube"></div>
+          <div className="sk-wander-cube"></div>
+        </div>
+      </div>
+      <iframe
+        src={url}
+        className="valtio-iframe"
+        style={{ display: ready ? "block" : "none" }}
+        data-testid="valtio-iframe"
+        onLoad={() => {
+          setReady(true);
+        }}
+        onError={() => alert(`There was an error loading the Valtio Platform`)}
+      />
+    </div>
   );
 };
