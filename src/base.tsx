@@ -1,5 +1,5 @@
 import React from "react";
-import "assets/styles.css";
+import "./assets/styles.css";
 
 export interface ComponentProps {
   host?: string;
@@ -19,9 +19,31 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
   onInit = () => {},
   onLoad = () => {},
 }) => {
-  const url = `${host}/${endpoint}`;
-  const ref = React.useRef<HTMLElement>();
+  const url = `${host}/${endpoint}#embedded=true`;
+  const ref = React.useRef<HTMLIFrameElement>(null);
   const [ready, setReady] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const el = ref?.current;
+
+    const handleMessage = (e: MessageEvent) => {
+      if (
+        !el || // ref hasn't been updated yet
+        !e.isTrusted || // not trusted (generated via dispatchEvent)
+        e.origin !== host || // not from our iframe's origin
+        e.source !== el.contentWindow // not from our iframe's window
+      )
+        return;
+      const { type, detail } = e.data;
+      el.dispatchEvent(new CustomEvent(type, detail));
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
 
   React.useEffect(() => {
     const el = ref?.current;
@@ -87,6 +109,7 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
         </div>
       </div>
       <iframe
+        ref={ref}
         src={url}
         className="valtio-iframe"
         style={{ display: ready ? "block" : "none" }}

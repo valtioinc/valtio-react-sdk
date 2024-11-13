@@ -11,7 +11,7 @@ test("renders the BaseComponent", () => {
   const element = screen.getByTestId("valtio-iframe");
 
   expect(element).toBeInTheDocument();
-  expect(element).toHaveAttribute("src", "https://example.com/");
+  expect(element).toHaveAttribute("src", "https://example.com/#embedded=true");
 });
 
 test("renders the ValtioApp component", () => {
@@ -20,7 +20,7 @@ test("renders the ValtioApp component", () => {
   const element = screen.getByTestId("valtio-iframe");
 
   expect(element).toBeInTheDocument();
-  expect(element).toHaveAttribute("src", "https://example.com/");
+  expect(element).toHaveAttribute("src", "https://example.com/#embedded=true");
 });
 
 test("renders the ValtioRequest component", () => {
@@ -29,5 +29,8 @@ test("renders the ValtioRequest component", () => {
   const element = screen.getByTestId("valtio-iframe");
 
   expect(element).toBeInTheDocument();
-  expect(element).toHaveAttribute("src", "https://example.com/e/request");
+  expect(element).toHaveAttribute(
+    "src",
+    "https://example.com/e/request#embedded=true",
+  );
 });
