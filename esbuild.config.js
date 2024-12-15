@@ -1,24 +1,24 @@
-const { build } = require("esbuild");
+const { build } = require('esbuild')
 
 const shared = {
+  entryPoints: ['./src/index.tsx'],
+  external: ['react'],
+  logLevel: 'info',
   bundle: true,
-  entryPoints: ["./src/index.tsx"],
-  external: ["react"],
-  logLevel: "info",
   minify: true,
   sourcemap: false,
-};
+}
 
 build({
   ...shared,
-  format: "esm",
-  outfile: "./dist/index.esm.js",
-  target: ["esnext", "node12.22.0"],
-});
+  format: 'esm',
+  outfile: './lib/index.mjs',
+  target: ['esnext', 'node12.22.0'],
+})
 
 build({
   ...shared,
-  format: "cjs",
-  outfile: "./dist/index.cjs.js",
-  target: ["esnext", "node12.22.0"],
-});
+  format: 'cjs',
+  outfile: './lib/index.js',
+  target: ['esnext', 'node12.22.0'],
+})
