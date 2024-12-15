@@ -22,19 +22,19 @@
 
 <h4 align="center">Securely collect & manage sensitive user data.</h4>
 
-[Valtio](https://valtio.io) is a workflow automation platform that helps end-users design and power task-based digital 
-workflows for a variety of use cases. Tasks can include things like filling out forms, e-signatures, uploading documents, 
-identity verification, and many more. Users can assign other users to complete specific workflow steps and the platform 
-will handle notifying the user of their tasks and guiding them through the successful completion of those tasks. 
+[Valtio](https://valtio.io) is a workflow automation platform that helps end-users design and power task-based digital
+workflows for a variety of use cases. Tasks can include things like filling out forms, e-signatures, uploading documents,
+identity verification, and many more. Users can assign other users to complete specific workflow steps and the platform
+will handle notifying the user of their tasks and guiding them through the successful completion of those tasks.
 ***
 
 ## Highlights
 
 This package provides an SDK for embedding Valtio into your React applications.
 * Embed the workflow creator experience to allow application users to create new workflows (coming soon)
-* Embed the workflow sender experience to allow application users to initiate workflows and assign other users to tasks 
+* Embed the workflow sender experience to allow application users to initiate workflows and assign other users to tasks
 * Embed the workflow participant experience to allow application users to complete their workflow tasks
-* Embed the full Valtio platform to allow application users to use all the capabilities of the platform. 
+* Embed the full Valtio platform to allow application users to use all the capabilities of the platform.
 ***
 
 ## Install
