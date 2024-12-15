@@ -36,6 +36,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "packageManager": "yarn@4.3.0",
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
