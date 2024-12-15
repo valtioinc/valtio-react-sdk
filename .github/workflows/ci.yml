@@ -108,4 +108,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Release
-        run: yarn semantic-release
+        run: yarn release
