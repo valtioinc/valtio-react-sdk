@@ -1,30 +1,30 @@
-import React from "react";
-import "./assets/styles.css";
+import React from 'react'
+import './assets/styles.css'
 
 export interface ComponentProps {
-  host?: string;
-  onExit?: (detail: any) => void;
-  onInit?: (detail: any) => void;
-  onLoad?: (detail: any) => void;
+  host?: string
+  onExit?: (detail: any) => void
+  onLoad?: (detail: any) => void
+  debug?: boolean
 }
 
 export interface BaseComponentProps extends ComponentProps {
-  endpoint?: string;
+  endpoint?: string
 }
 
 export const BaseComponent: React.FC<BaseComponentProps> = ({
-  host = "https://app.valtio.io",
-  endpoint = "",
+  host = 'https://app.valtio.io',
+  endpoint = '',
   onExit = () => {},
   onInit = () => {},
   onLoad = () => {},
 }) => {
-  const url = `${host}/${endpoint}#embedded=true`;
-  const ref = React.useRef<HTMLIFrameElement>(null);
-  const [ready, setReady] = React.useState<boolean>(false);
+  const url = `${host}/${endpoint}#embedded=true`
+  const ref = React.useRef<HTMLIFrameElement>(null)
+  const [ready, setReady] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    const el = ref?.current;
+    const el = ref?.current
 
     const handleMessage = (e: MessageEvent) => {
       if (
@@ -98,14 +98,11 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
 
   return (
     <div>
-      <div
-        className="valtio-loader"
-        style={{ display: ready ? "none" : "flex" }}
-      >
+      <div className="valtio-loader" style={{ display: ready ? 'none' : 'flex' }}>
         <div className="sk-wander">
-          <div className="sk-wander-cube"></div>
-          <div className="sk-wander-cube"></div>
-          <div className="sk-wander-cube"></div>
+          <div className="sk-wander-cube" />
+          <div className="sk-wander-cube" />
+          <div className="sk-wander-cube" />
         </div>
       </div>
       <iframe
@@ -120,5 +117,5 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
         onError={() => alert(`There was an error loading the Valtio Platform`)}
       />
     </div>
-  );
-};
+  )
+}

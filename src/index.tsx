@@ -1,3 +1,3 @@
-import { ValtioApp, ValtioRequest } from "./main";
+import { ValtioApp, ValtioRequest } from './main'
 
-export { ValtioApp, ValtioRequest };
+export { ValtioApp, ValtioRequest }
