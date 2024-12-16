@@ -50,16 +50,44 @@ yarn add @valtioinc/valtio-react-sdk
 
 ## Usage
 
-```sh
+```typescript jsx
 import React from "react";
 import { ValtioApp } from "@valtioinc/valtio-react-sdk";
 
 function App() {
+    
+  const onExit = () => {
+    // At this point the user has requested to exit the Valtio 
+    // platform and return to your application. You should 
+    // handle this event by either switching screens or 
+    // removing the ValtioApp component
+  }
+  
   return (
     <div className="app">
-      <ValtioApp />
+      <ValtioApp onExit={onExit} />
     </div>
   );
+}
+```
+
+#### Example: Show Valtio when user clicks a button 
+
+```typescript jsx
+function App() {
+  const [showValtio, setShowValtio] = React.useState(false)
+
+  return (
+    <div className="app">
+      {!showValtio && (
+        <header>
+          <p>Valtio React App Reference Implementation</p>
+          <button onClick={() => setShowValtio(!showValtio)}>Show Valtio</button>
+        </header>
+      )}
+      {showValtio && <ValtioApp onExit={() => setShowValtio(false)} />}
+    </div>
+  )
 }
 ```
 ***
