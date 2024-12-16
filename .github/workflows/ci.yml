@@ -86,10 +86,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: SCA scan with audit-ci
-        run: yarn sca -p yarn
+        run: yarn sca
 
-      - name: Provenance scan with npm audit
-        run: yarn npm audit signatures
+      - name: SCA scan with yarn npm audit
+        run: yarn npm audit --environment production
 
   release:
     name: Release
