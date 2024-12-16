@@ -18,6 +18,7 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
   onExit = () => {},
   onInit = () => {},
   onLoad = () => {},
+  debug = false,
 }) => {
   const url = `${host}/${endpoint}#embedded=true`
   const ref = React.useRef<HTMLIFrameElement>(null)
@@ -111,10 +112,14 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
         className="valtio-iframe"
         style={{ display: ready ? "block" : "none" }}
         data-testid="valtio-iframe"
-        onLoad={() => {
-          setReady(true);
+        onLoad={(syntheticEvent) => {
+          debug && console.info('onLoad', syntheticEvent.nativeEvent)
+          setReady(true)
         }}
-        onError={() => alert(`There was an error loading the Valtio Platform`)}
+        onError={(syntheticEvent) => {
+          debug && console.error('onError', syntheticEvent.nativeEvent)
+          alert(`There was an error loading the Valtio Platform`)
+        }}
       />
     </div>
   )
