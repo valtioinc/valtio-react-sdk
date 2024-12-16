@@ -45,7 +45,8 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "sca": "audit-ci --config .audit-ci.jsonc --report-type summary",
-    "sca:fix": "yarn-audit-fix"
+    "sca:fix": "yarn-audit-fix",
+    "release": "semantic-release"
   },
   "packageManager": "yarn@4.3.0",
   "devDependencies": {
