@@ -1,7 +1,5 @@
 {
-  "branches": [
-    "main"
-  ],
+  "branches": ["main"],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
@@ -53,10 +51,7 @@
       {
         "preset": "conventionalcommits",
         "writerOpts": {
-          "commitsSort": [
-            "subject",
-            "scope"
-          ]
+          "commitsSort": ["subject", "scope"]
         }
       }
     ],
@@ -66,8 +61,6 @@
         "successComment": false
       }
     ],
-    [
-      "@semantic-release/npm"
-    ]
+    ["@semantic-release/npm"]
   ]
 }
