@@ -16,7 +16,6 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
   host = 'https://app.valtio.io',
   endpoint = '',
   onExit = () => {},
-  onInit = () => {},
   onLoad = () => {},
   debug = false,
 }) => {
@@ -33,69 +32,24 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
         !e.isTrusted || // not trusted (generated via dispatchEvent)
         e.origin !== host || // not from our iframe's origin
         e.source !== el.contentWindow // not from our iframe's window
-      )
-        return;
-      const { type, detail } = e.data;
-      el.dispatchEvent(new CustomEvent(type, detail));
-    };
-
-    window.addEventListener("message", handleMessage);
-
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, []);
-
-  React.useEffect(() => {
-    const el = ref?.current;
-
-    const handleExit = (e: Event) =>
-      onExit && onExit((e as CustomEvent).detail);
-
-    if (el) {
-      el.addEventListener("exit", handleExit);
+      ) {
+        return
     }
 
-    return () => {
-      if (el) {
-        el.removeEventListener("exit", handleExit);
-      }
-    };
-  }, [onExit]);
+      debug && console.info('onMessage', e)
+      const { type, detail } = e.data
 
-  React.useEffect(() => {
-    const el = ref?.current;
-
-    const handleInit = (e: Event) =>
-      onInit && onInit((e as CustomEvent).detail);
-
-    if (el) {
-      el.addEventListener("init", handleInit);
+      if (type === 'exit') {
+        onExit && onExit(detail)
     }
+      }
+
+    window.addEventListener('message', handleMessage)
 
     return () => {
-      if (el) {
-        el.removeEventListener("init", handleInit);
+      window.removeEventListener('message', handleMessage)
       }
-    };
-  }, [onInit]);
-
-  React.useEffect(() => {
-    const el = ref?.current;
-
-    const handleLoad = (e: Event) =>
-      onLoad && onLoad((e as CustomEvent).detail);
-
-    if (el) {
-      el.addEventListener("load", handleLoad);
-    }
-
-    return () => {
-      if (el) {
-        el.removeEventListener("load", handleLoad);
-      }
-    };
-  }, [onLoad]);
+  }, [])
 
   return (
     <div>
@@ -115,6 +69,7 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
         onLoad={(syntheticEvent) => {
           debug && console.info('onLoad', syntheticEvent.nativeEvent)
           setReady(true)
+          onLoad && onLoad({ ready })
         }}
         onError={(syntheticEvent) => {
           debug && console.error('onError', syntheticEvent.nativeEvent)
