@@ -50,46 +50,67 @@ yarn add @valtioinc/valtio-react-sdk
 
 ## Usage
 
+#### Example: Show Valtio when user clicks a button
+
 ```typescript jsx
 import React from "react";
 import { ValtioApp } from "@valtioinc/valtio-react-sdk";
 
 function App() {
-    
-  const onExit = () => {
-    // At this point the user has requested to exit the Valtio 
-    // platform and return to your application. You should 
-    // handle this event by either switching screens or 
-    // removing the ValtioApp component
+  const [showValtio, setShowValtio] = React.useState(false)
+
+  const onShow = () => {
+    /*
+     The user has requested to open the Valtio platform.
+     */
+    setShowValtio(true)
+  }
+  
+  const onHide = () => {
+    /*
+      The user has requested to exit the Valtio platform and return to your application.
+      Handle this event by either switching screens or removing the ValtioApp component.
+     */
+    setShowValtio(false)
   }
   
   return (
-    <div className="app">
-      <ValtioApp onExit={onExit} />
-    </div>
-  );
-}
-```
-
-#### Example: Show Valtio when user clicks a button 
-
-```typescript jsx
-function App() {
-  const [showValtio, setShowValtio] = React.useState(false)
-
-  return (
-    <div className="app">
+    <div>
       {!showValtio && (
         <header>
           <p>Valtio React App Reference Implementation</p>
-          <button onClick={() => setShowValtio(!showValtio)}>Show Valtio</button>
+          <button onClick={onShow}>Show Valtio</button>
         </header>
       )}
-      {showValtio && <ValtioApp onExit={() => setShowValtio(false)} />}
+      {showValtio && (
+        <ValtioApp
+          appID="75a8c8a8-8763-4590-ab5b-4d5278d41724"
+          language="en"
+          onExit={onHide}
+          user={{
+            first_name: "John",
+            last_name: "Doe",
+            email: "john.doe@example.com"
+          }}
+        />
+      )}
     </div>
   )
 }
 ```
+### ValtioApp Component Properties
+| Property        | Description                                                                                                                                                                                        | Type         | Required | Default               | 
+|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|----------|-----------------------|
+| appID           | A unique identifier for your application and your organization. Please contact the Valtio team to request an application ID.                                                                       | string       | Yes      |                       |
+| host            | The host that will be used to load the embedded Valtio experience. Defaults to Valtio's production system, but can also be set to Valtio's sandbox environment (https://app-integration.valtio.io) | string       | No       | https://app.valtio.io |
+| language        | The language preference of the user that will be interacting with the Valtio platform. Currently only English ('en') and Spanish ('es') are supported.                                             | 'en' \| 'es' | No       |
+| debug           | A flag to enable debug logging in the Javascript console.                                                                                                                                          | boolean      | No       | false                 |
+| onLoad          | A callback function that will be invoked when the embedded Valtio experience has finished loading.                                                                                                 | function     | No       |                       |
+| onExit          | A callback function that will be invoked when the user requests to exit the Valtio experience and return to your application.                                                                      | function     | No       |                       |
+| user.first_name | The first name of the user that will be interacting with the Valtio platform. This will be used to autofill fields in the account sign-up flow.                                                    | string       | No       |                       |
+| user.last_name  | The last name of the user that will be interacting with the Valtio platform. This will be used to autofill fields in the account sign-up flow.                                                     | string       | No       |                       |
+| user.email      | The email of the user that will be interacting with the Valtio platform. This will be used to autofill the email in the account authentication / sign-up flow.                                     | string       | No       |                       | 
+
 ***
 
 ## Author

@@ -1,11 +1,14 @@
 import React from 'react'
 import './assets/styles.css'
+import { flattenObject, isValidUrl } from './utils'
 
 export interface ComponentProps {
+  appID: string
   host?: string
-  onExit?: (detail: any) => void
-  onLoad?: (detail: any) => void
+  language?: 'en' | 'es'
   debug?: boolean
+  onLoad?: (detail: any) => void
+  onExit?: (detail: any) => void
 }
 
 export interface BaseComponentProps extends ComponentProps {
@@ -13,13 +16,48 @@ export interface BaseComponentProps extends ComponentProps {
 }
 
 export const BaseComponent: React.FC<BaseComponentProps> = ({
+  appID,
   host = 'https://app.valtio.io',
   endpoint = '',
+  language = 'en',
   onExit = () => {},
   onLoad = () => {},
   debug = false,
+  ...extras
 }) => {
-  const url = `${host}/${endpoint}#embedded=true`
+  if (typeof appID !== 'string') {
+    throw new TypeError(`'appID=${appID}' is not valid application ID.`)
+  }
+
+  if (!isValidUrl(host)) {
+    throw new TypeError(`'host=${host}' is not a valid URL.`)
+  }
+
+  if (typeof endpoint !== 'string') {
+    throw new TypeError(`'endpoint=${endpoint}' is not valid URL path.`)
+  }
+
+  if (!['en', 'es'].includes(language)) {
+    throw new TypeError(`'language=${language}' is not a supported language`)
+  }
+
+  if (!(onExit instanceof Function)) {
+    throw new TypeError(`'onExit=${onExit}' is not a valid callback function.`)
+  }
+
+  if (!(onLoad instanceof Function)) {
+    throw new TypeError(`'onLoad=${onLoad}' is not a valid callback function.`)
+  }
+
+  const params = new URLSearchParams(
+    flattenObject({
+      embedded: 'true',
+      appID,
+      language,
+      ...extras,
+    })
+  )
+  const url = `${host}/${endpoint}#${params.toString()}`
   const ref = React.useRef<HTMLIFrameElement>(null)
   const [ready, setReady] = React.useState<boolean>(false)
 

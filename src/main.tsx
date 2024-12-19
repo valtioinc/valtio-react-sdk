@@ -1,7 +1,15 @@
 import React from 'react'
-import { BaseComponent, ComponentProps } from './base'
+import { BaseComponent, type ComponentProps } from './base'
 
-export const ValtioApp: React.FC<ComponentProps> = (props) => {
+interface ValtioAppProps extends ComponentProps {
+  user: {
+    first_name?: string
+    last_name?: string
+    email?: string
+  }
+}
+
+export const ValtioApp: React.FC<ValtioAppProps> = (props) => {
   return <BaseComponent {...props} />
 }
 
